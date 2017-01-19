@@ -1,17 +1,19 @@
 
-/*  2017.01.18  */
+/*  2017.01.18 , 01.19  */
 
 Mover[] movers ;
 DoubleSpring[] springs ;
 int linkNum ;
 int focPoint ;
 PVector gravity ;
+PVector pull ;
 
 void setup() {
 
   size( 800 , 400 ) ;
 
   gravity = new PVector(0 , 1) ;
+  pull = new PVector(0 , 1) ;
   
   linkNum = 3 ;
   focPoint = 30 ;
@@ -28,46 +30,39 @@ void setup() {
     springs[j] = new DoubleSpring(30) ;
   } 
 
-  // s1 , start  
-  /*
-  sprLinks = new SpringLink[linkNum] ;
-  focPoint = 30 ;
-  
-  for(int i = 0 ; i < linkNum ; i++) {
-    
-    PVector linkStart = new PVector( width/2 , focPoint ) ;
-    focPoint += 30 ;
-    PVector linkEnd   = new PVector( width/2 , focPoint ) ;
-    focPoint += 30 ;
-    
-    sprLinks[i] = new SpringLink( linkStart , linkEnd , 
-                                  linkStart ,      30   ) ;
+  for(int q = 0 ; q < linkNum+1 ; q++) {
+    Mover mov = movers[q] ;
+    mov.applyForce( pull ) ;
   }
-  */
-  // s1 , end
+  
 }
 
 void draw() {
-  // s1 , start  
-  /*
-  for(int j = 0 ; j < linkNum ; j++) {
-    SpringLink sl = sprLink[i].get() ;
-    sl.update();
-    sl.upOne.run();
-    sl.downOne.run();
-    sl.spr.display();
-  }
-  */
-  // s1 , end
   
   background(200);
   
   for(int k = 0 ; k < linkNum ; k++) {
 
     DoubleSpring ds = springs[k] ;
-    
+        
     Mover movA = movers[k] ;
     Mover movB = movers[k+1] ;
+    /* NOTE !!!
+       movA is is is movers[k] object .
+       Operating movA is is is Operating movers[k] .    
+     */
+     
+    // test whether movers[0]->movA is a fact object .
+    if( k == 0 ) {
+      movB.signal = 2 ;   
+    }
+    if( k == 1 ) {
+      //println("k = " + movA.signal );
+      // result = 2
+      /* 
+         movers[0]->movA is is is a fact object .
+       */
+    }
 
     PVector sprForceForA = ds.updateForA( movA , movB ) ;
     movA.applyForce(sprForceForA) ;
@@ -75,15 +70,18 @@ void draw() {
     PVector sprForceForB = ds.updateForB( movA , movB ) ;
     movB.applyForce(sprForceForB) ;
 
-    movA.applyForce( gravity ) ;
-    if( k == linkNum-1 ) {
-      movB.applyForce( gravity ) ;
-    }    
-
-    movA.run() ;
-    movB.run() ;
-    
     ds.display( movA , movB ) ;
     
   }
+  
+  for(int p = 0 ; p < linkNum+1 ; p++) {
+
+    Mover m = movers[p] ;
+
+    //m.applyForce( gravity ) ;
+    m.update();
+    m.checkEdge();
+    m.display();
+  }
+  
 }
