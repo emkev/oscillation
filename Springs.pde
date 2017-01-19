@@ -3,6 +3,7 @@
 
 */
 
+/*
 Mover mover ;
 Spring spring ;
 //PVector gravity ;
@@ -41,22 +42,17 @@ void draw() {
 
 void mousePressed() {
 
-  /* way1 */
+  // way1
   //PVector mouseLoc = new PVector( mouseX , mouseY ) ;
   //mover.location = mouseLoc.get() ;
 
-  /* way2 */
+  // way2
   //mover.clicked( mouseX , mouseY ) ;
   
-  /* pull a time */
+  // pull a time
   float forceStrength = map( (mouseY-mover.location.y) , 0 , 320 , 0 , 10 ) ;
   PVector pullForce = new PVector( 0 , forceStrength) ;  
   mover.applyForce( pullForce ) ;
   
-}
-
-/*
-void mouseReleased() {
-  //mover.stopDragging() ;
 }
 */
