@@ -8,16 +8,19 @@ class Mover
   PVector location ;
   PVector velocity ;
   PVector acceleration ;
-  PVector diffOffset ;
-  boolean isDrag ;
+  //PVector diffOffset ;
+  //boolean isDrag ;
+  int signal ;
   
   Mover( PVector loc ) {
-    location     = loc.get() ;
-    velocity     = new PVector(0 , 0) ;
+    location = loc.get() ;
+    velocity = new PVector(0 , 0) ;
     acceleration = new PVector(0 , 0) ;
-   
-    diffOffset = new PVector(0 , 0) ; 
-    isDrag = false ;
+    
+    //diffOffset = new PVector(0 , 0) ; 
+    //isDrag = false ;
+    
+    signal = 1 ;
   }
     
   void applyForce(PVector force) {
@@ -48,13 +51,9 @@ class Mover
   void display() {
     ellipse(location.x , location.y , 32 , 32) ;
   }
-  
+
+  /*  
   void clicked( int mx , int my ) {
-    //diffOffset = mouseLoc.get() ;
-    
-    //location.x = diffOffset.x ;
-    //location.y = diffOffset.y ;
-    
     isDrag = true ;
     diffOffset.x = location.x - mx ;
     diffOffset.y = location.y - my ; 
@@ -70,5 +69,5 @@ class Mover
       location.y = my + diffOffset.y ;
     }
   }
-  
+  */
 }
